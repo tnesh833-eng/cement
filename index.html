@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevWork India | Top Web Development Jobs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-code"></i> DevWork<span class="highlight">India</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Find Work</a></li>
+                <li><a href="#">Hire Developers</a></li>
+                <li><a href="#">Log In</a></li>
+                <li><a href="#" class="btn-signup">Sign Up</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <h1>Find Top Web Development<br>Projects in <span class="text-gradient">India</span></h1>
+            <p>Connect with startups and enterprises looking for React, Node, Web3, and Fullstack developers.</p>
+
+            <div class="search-bar">
+                <div class="input-group">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search keywords (e.g. React, Shopify)...">
+                </div>
+                <button class="btn-search" onclick="filterJobs()">Search Jobs</button>
+            </div>
+
+            <div class="popular-tags">
+                <span>Popular:</span>
+                <button class="tag" onclick="setSearch('React')">React</button>
+                <button class="tag" onclick="setSearch('WordPress')">WordPress</button>
+                <button class="tag" onclick="setSearch('MERN')">MERN Stack</button>
+                <button class="tag" onclick="setSearch('Ecommerce')">E-commerce</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container main-layout">
+        <!-- Sidebar Filters -->
+        <aside class="filters">
+            <div class="filter-header">
+                <h3>Filters</h3>
+                <button class="btn-clear" onclick="clearFilters()">Clear</button>
+            </div>
+
+            <div class="filter-group">
+                <h4>Category</h4>
+                <label class="checkbox-container">Frontend Development
+                    <input type="checkbox" name="category" value="frontend">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Backend Development
+                    <input type="checkbox" name="category" value="backend">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Full Stack
+                    <input type="checkbox" name="category" value="fullstack">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">CMS / WordPress
+                    <input type="checkbox" name="category" value="cms">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Budget Range (₹)</h4>
+                <label class="checkbox-container">Under ₹10k
+                    <input type="checkbox" name="budget" value="low">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">₹10k - ₹50k
+                    <input type="checkbox" name="budget" value="medium">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">₹50k - ₹1 Lakh
+                    <input type="checkbox" name="budget" value="high">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">₹1 Lakh+
+                    <input type="checkbox" name="budget" value="premium">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <div class="filter-group">
+                <h4>Location</h4>
+                <label class="checkbox-container">Remote (India)
+                    <input type="checkbox" name="location" value="remote">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Bangalore
+                    <input type="checkbox" name="location" value="bangalore">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Delhi NCR
+                    <input type="checkbox" name="location" value="delhi">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="checkbox-container">Mumbai
+                    <input type="checkbox" name="location" value="mumbai">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- Job List -->
+        <section class="job-listings">
+            <div class="listings-header">
+                <h2 id="results-count">Showing all jobs</h2>
+                <div class="sort-dropdown">
+                    <span>Sort by:</span>
+                    <select id="sort-select" onchange="sortJobs()">
+                        <option value="newest">Newest First</option>
+                        <option value="budget-high">Budget: High to Low</option>
+                        <option value="budget-low">Budget: Low to High</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="job-container">
+                <!-- Job Cards will be injected here -->
+            </div>
+
+            <button class="btn-load-more">Load More Jobs</button>
+        </section>
+    </main>
+
+    <!-- Application Modal -->
+    <div id="apply-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Apply for Project</h2>
+            <div class="job-summary" id="modal-job-summary">
+                <!-- Job details -->
+            </div>
+            <form id="application-form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" required placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Bid Amount (₹)</label>
+                    <input type="number" required placeholder="e.g. 25000">
+                </div>
+                <div class="form-group">
+                    <label>Proposal / Cover Letter</label>
+                    <textarea rows="4" required placeholder="Why fit are you for this job?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Portfolio Link</label>
+                    <input type="url" placeholder="https://github.com/...">
+                </div>
+                <button type="submit" class="btn-submit">Submit Proposal</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 DevWork India. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
